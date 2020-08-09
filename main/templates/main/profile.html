@@ -1,0 +1,29 @@
+{% extends "layout/basic.html" %}
+
+{% block title %}Профиль пользователя{% endblock %}
+
+{% block content %}
+    <h2>Профиль пользователя {{ user.username }}</h2>
+    {% if user.first_name and user.last_name %}
+        <p>Здравствуйте, {{ user.first_name }} {{ user.last_name }}!</p>
+    {% else %}
+        <p>Здравствуйте!</p>
+    {% endif %}
+    <p><a href="{% url 'main:profile_pt_add' %}">Добавить статью</a></p>
+    <h3>Ваши статьи</h3>
+    {% if pts %}
+    <ul class="list-unstyled">
+        {% for pt in pts %}
+        <li class="media my-5 p-3 border">
+            <div class="media-body">
+            <h6>{{ pt.created_at }}</h6>
+            <a href="{% url 'main:detail' pk=pt.pk %}"><h3>{{ pt.title }}</h3></a> 
+            <a href="{% url 'main:profile_pt_change' pt.pk %}"><input type="submit" value="Исправить"/></a> 
+            <a href="{% url 'main:profile_pt_delete' pt.pk %}"><input type="submit" value="Удалить"/></a>         
+    	    </div>      	          
+        </li>
+        {% endfor %}
+    {% endif %}    
+    </ul>  
+    
+{% endblock %}

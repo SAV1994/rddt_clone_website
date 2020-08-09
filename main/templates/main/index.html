@@ -1,0 +1,35 @@
+{% extends "layout/basic.html" %}
+
+{% load bootstrap4 %}
+
+{% block title %}Новые статьи{% endblock %}
+
+{% block content %}
+    <h3>Новые статьи</h3>
+    {% if pts %}
+        {% for pt in pts.object_list %}
+        <div class="my-2 p-2 border">
+            <h6>{{ pt.author }}</h6>
+            <h6>{{ pt.created_at }}</h6>
+            <a href="{% url 'main:detail' pk=pt.pk %}"><h3>{{ pt.title }}</h3></a>
+            <p>{{ pt.content }}</p>
+            {% if pt.image %}
+                <div class="col-md-auto"><img src="{{ pt.image.url }}" class="main-image" width="150px"></div>
+            {% endif %}
+        </div>
+        {% endfor %}
+        <nav aria-label="...">
+            <ul class="pagination pagination-sm">
+            {% for n in pts.paginator.page_range %}
+                {% if pts.number == n %}
+                    <li class="page-item disabled">
+                        <a class="page-link" href="?page={{ n }}" tabindex="-1">{{ n }}</a>
+                    </li>
+                {% else %}
+                    <li class="page-item"><a class="page-link" href="?page={{ n }}">{{ n }}</a></li>
+                {% endif %} 
+            {% endfor %}       
+            </ul>
+        </nav>
+    {% endif %}
+{% endblock %}

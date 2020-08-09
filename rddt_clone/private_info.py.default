@@ -1,0 +1,3 @@
+# Почта Gmail для email-рассылок
+EMAIL = '@gmail.com'
+PASSWORD = ''
